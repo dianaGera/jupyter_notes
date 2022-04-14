@@ -1,0 +1,21 @@
+'CREATE TABLE employment(\
+                id serial PRIMARY KEY,\
+                country varchar(225) NOT NULL,\
+                year int NOT NULL,\
+                total int NOT NULL,\
+                Managers int NOT NULL,\
+                Professionals int NOT NULL,\
+                "Technicians and associate professionals" int NOT NULL,\
+                "Clerical support workers" int NOT NULL,\
+                "Service and sales workers" int NOT NULL,\
+                "Craft and related trades workers" int NOT NULL,\
+                "Plant and machine operators, and assemblers" int NOT NULL,\
+                "Elementary occupations and skilled agricultural, forestry .." int NOT NULL\
+                    );'
+
+
+'CREATE TABLE region(\
+                    id SERIAL PRIMARY KEY,\
+                    region varchar(225) NOT NULL);'
+
+"ALTER TABLE employment ADD CONSTRAINT order_id_fkey FOREIGN KEY (region_id) REFERENCES region(id);"
