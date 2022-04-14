@@ -1,11 +1,12 @@
 import os
 import csv
 import pandas as pd
-import matplotlib
+import matplotlib.pyplot as plt
 from os import environ
 from time import process_time_ns
 import psycopg2
 from dotenv import load_dotenv
+import seaborn as sb
 
 load_dotenv()
 
@@ -28,6 +29,70 @@ def make_queries():
         )
 
         connection.autocommit = True
+
+        with connection.cursor() as cursor:
+
+            '''Scatter chart'''
+            # cursor.execute('select region.region, sum(total), year from employment inner join region on employment.region_id=region.id group by region.region, year order by sum(total)')
+
+            # data = pd.DataFrame(cursor.fetchall())
+            # print(data)
+
+
+            # plt.scatter(data[0], data[1], c=data[2])
+            # plt.title('Total amount of employers')
+            # plt.xlabel('Region')
+            # plt.ylabel('Amount in thousands')
+            # plt.colorbar()
+            # plt.show()
+
+
+
+            '''Line chart'''
+            # cursor.execute('select region.region, sum(total), year from employment inner join region on employment.region_id=region.id group by region.region, year order by region.region, year')
+
+            # data = pd.DataFrame(cursor.fetchall())
+            
+            # region = data[0][0]
+            # rows, l, legend = list(), list(), list()
+            # for row in range(len(data[0])):
+
+            #     if region != data[0][row]:
+            #         legend.append(region)
+            #         region = data[0][row]
+            #         rows.append(l)
+            #         l = list()
+            #     else:
+            #         l.append(data[1][row])
+            # rows.append(l), legend.append(region)
+                
+            # print(len(rows))
+            # for region in range(len(rows)):
+            #     plt.plot(rows[region], label='list')
+            # plt.title('Chart of employments in every regions')
+            # plt.ylabel('Amount of employment in thousands')
+            # plt.xlabel('Year')
+            # plt.legend(legend)
+            # plt.show()
+
+            '''Bar Chart'''
+
+            # cursor.execute('select region.region, sum(total) from employment inner join region on employment.region_id=region.id group by region.region order by region.region')
+
+            # data = pd.DataFrame(cursor.fetchall())
+            # plt.bar(data[0], data[1])
+            # plt.show()
+
+
+            # cursor.execute("select region.region, sum(total), year from employment inner join region on employment.region_id=region.id group by year, region.region having region.region='Emerging Europe Region' order by year")
+
+            # data = pd.DataFrame(cursor.fetchall())
+            # plt.plot(data[2], data[1])
+            # # plt.title('Total Employment in Europe during 2000-2022')
+            # # plt.legend('Europe')
+            # plt.show()
+
+
 
         '''Add new col region'''
         # with connection.cursor() as cursor:
