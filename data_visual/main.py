@@ -2,11 +2,9 @@ import os
 import csv
 import pandas as pd
 import matplotlib.pyplot as plt
-from os import environ
-from time import process_time_ns
 import psycopg2
 from dotenv import load_dotenv
-import seaborn as sb
+import seaborn as sns
 
 load_dotenv()
 
@@ -48,7 +46,7 @@ def make_queries():
 
 
 
-            '''Line chart'''
+            ''' Multiple Line chart'''
             # cursor.execute('select region.region, sum(total), year from employment inner join region on employment.region_id=region.id group by region.region, year order by region.region, year')
 
             # data = pd.DataFrame(cursor.fetchall())
@@ -75,6 +73,17 @@ def make_queries():
             # plt.legend(legend)
             # plt.show()
 
+            '''Single line chart'''
+
+            # cursor.execute("select region.region, sum(total), year from employment inner join region on employment.region_id=region.id group by year, region.region having region.region='Emerging Europe Region' order by year")
+
+            # data = pd.DataFrame(cursor.fetchall())
+            # plt.plot(data[2], data[1])
+            
+            # plt.title('Total Employment in Europe during 2000-2022')
+            # plt.legend('Europe')
+            # plt.show()
+
             '''Bar Chart'''
 
             # cursor.execute('select region.region, sum(total) from employment inner join region on employment.region_id=region.id group by region.region order by region.region')
@@ -83,14 +92,6 @@ def make_queries():
             # plt.bar(data[0], data[1])
             # plt.show()
 
-
-            # cursor.execute("select region.region, sum(total), year from employment inner join region on employment.region_id=region.id group by year, region.region having region.region='Emerging Europe Region' order by year")
-
-            # data = pd.DataFrame(cursor.fetchall())
-            # plt.plot(data[2], data[1])
-            # # plt.title('Total Employment in Europe during 2000-2022')
-            # # plt.legend('Europe')
-            # plt.show()
 
 
 
@@ -129,6 +130,51 @@ def make_queries():
         #                         {row[9]}, {row[10]}, {row[11]});"
         #             )
         #             connection.commit()
+
+
+        ''' Seaborn multiple line and multiple charts generating '''
+        # with connection.cursor() as cursor:
+        #     cursor.execute('select * from region;')
+        #     for region in cursor.fetchall():
+        #         cursor.execute(f'select region.region, sum(managers), sum(professionals),\
+        #                         sum(technicians), sum(clerical), sum(service),\
+        #                         sum(craft), sum(plant),sum(elementary), year\
+        #                         from employment\
+        #                         inner join region\
+        #                         on employment.region_id=region.id\
+        #                         group by region.region, year, region_id\
+        #                         having region_id={region[0]}')
+                
+        #         data = pd.DataFrame(cursor.fetchall())
+
+        #         sns.lineplot(data=data[0:-1])
+        #         plt.legend(['managers', 'professionals', 'technicians',
+        #                     'clerical', 'service', 'craft', 'plant', 'elementary'])
+        #         plt.title(f'Employment schedule by industry in {region[1]} since 2000 till 2020')
+        #         plt.show()
+
+
+
+
+        '''Scatter Plot with Seaborn'''
+        # with connection.cursor() as cursor:
+        #     cursor.execute(f'select region.region, sum(managers), sum(professionals),\
+        #                     sum(technicians), sum(clerical), sum(service)\
+        #                     from employment\
+        #                     inner join region\
+        #                     on employment.region_id=region.id\
+        #                     group by region.region, region_id\
+        #                     having region_id>4 and region_id<=14 and region_id!=8')
+
+        #     data = pd.DataFrame(cursor.fetchall())
+        #     sns.scatterplot(data=data)
+        #     plt.legend(['managers', 'professionals', 'technicians',
+        #                 'clerical', 'service'])
+        #     plt.show()
+
+
+
+
 
     except Exception as _ex:
         print(_ex)
