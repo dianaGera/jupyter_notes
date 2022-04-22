@@ -183,4 +183,10 @@ def make_queries():
         connection.close
 
 
-make_queries()
+# make_queries()
+
+
+import requests
+
+r = requests.get('https://1drv.ms/x/s!AlO5QZPWq54zlArR-e54TPT1Bhm7?e=9j43TD')
+print(r.__dict__)
